@@ -39,14 +39,13 @@
 
 package org.eclipse.ecsp.sql.postgress.health;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.Assert.assertEquals;
-
 import org.eclipse.ecsp.sql.dao.constants.CredentialsConstants;
 import org.eclipse.ecsp.sql.dao.constants.HealthConstants;
 import org.eclipse.ecsp.sql.dao.constants.MetricsConstants;
 import org.eclipse.ecsp.sql.dao.constants.PostgresDbConstants;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * class {@link PostgresDbHealthTest}
