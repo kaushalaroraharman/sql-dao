@@ -84,41 +84,62 @@ import static org.postgresql.PGProperty.SSL_ROOT_CERT;
 @Configuration
 public class PostgresDbConfig {
 
+    /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(PostgresDbConfig.class);
 
+    /** The credentials provider. */
     CredentialsProvider credentialsProvider;
+    
+    /** The connection. */
     Connection connection;
+    
+    /** The data source. */
     private DataSource dataSource;
 
+    /** The ctx. */
     @Autowired
     private ApplicationContext ctx;
 
     /** Postgres DB properties. */
     @Value("${" + PostgresDbConstants.POSTGRES_JDBC_URL + "}")
     private String jdbcUrl;
+    
+    /** The user name. */
     @Value("${" + PostgresDbConstants.POSTGRES_USERNAME + "}")
     private String userName;
+    
+    /** The password. */
     @Value("${" + PostgresDbConstants.POSTGRES_PASSWORD + "}")
     private String password;
+    
+    /** The driver class name. */
     @Value("${" + PostgresDbConstants.POSTGRES_DRIVER_CLASS_NAME + "}")
     private String driverClassName;
+    
+    /** The pool name. */
     @Value("${" + PostgresDbConstants.POSTGRES_POOL_NAME + "}")
     private String poolName;
+    
+    /** The connection timeout ms. 
+     * Default: 60000ms
+     */
     @Value("${" + PostgresDbConstants.POSTGRES_CONNECTION_TIMEOUT_MS + ":60000}")
     private int connectionTimeoutMs;
-
-    /* Connection pool properties. */
+    
     /**
      * Minimum number of Connections a pool will maintain at any given time.
-     * Default: 3
+     * Default: 1
      */
     @Value("${" + PostgresDbConstants.POSTGRES_MIN_POOL_SIZE + ":1}")
     private int minPoolSize;
+    
     /**
      * Maximum number of Connections a pool will maintain at any given time.
+     * Default: 10
      */
     @Value("${" + PostgresDbConstants.POSTGRES_MAX_POOL_SIZE + ":10}")
     private int maxPoolSize;
+    
     /**
      * Seconds a Connection can remain pooled but unused before being discarded. <br>
      * Zero means idle connections never expire. <br>
@@ -126,34 +147,58 @@ public class PostgresDbConfig {
      */
     @Value("${" + PostgresDbConstants.POSTGRES_MAX_IDLE_TIME + "}")
     private int maxIdleTime;
+    
+    /** The cache prep stmts. */
     @Value("${" + PostgresDbConstants.POSTGRES_DS_CACHE_PREPARED_STATEMENTS_VALUE + "}")
     private String cachePrepStmts;
+    
+    /** The prep stmt cache size. */
     @Value("${" + PostgresDbConstants.POSTGRES_DS_PREPARED_STATEMENT_CACHE_SIZE_VALUE + "}")
     private int prepStmtCacheSize;
+    
+    /** The prep stmt cache sql limit. */
     @Value("${" + PostgresDbConstants.POSTGRES_DS_PREPARED_STATEMENT_CACHE_SQL_LIMIT_VALUE + "}")
     private int prepStmtCacheSqlLimit;
+    
+    /** The expected 99 th percentile ms value. */
     @Value("${" + HealthConstants.POSTGRES_EXPECTED_99_PI_MS_VALUE + ":60000}")
     private String expected99thPercentileMsValue;
+    
+    /** The credential provider bean name. */
     @Value("${" + CredentialsConstants.CREDENTIAL_PROVIDER_BEAN_NAME + " :defaultPostgresDbCredentialsProvider}")
     private String credentialProviderBeanName;
+    
+    /** The data source retry count. 
+     * Default: 3
+     */
     @Value("${postgres.datasource.create.retry.count:3}")
     private int dataSourceRetryCount;
+    
+    /** The data source retry delay. */
     @Value("${postgres.datasource.retry.delay.ms:10}")
     private int dataSourceRetryDelay;
+    
+    /** The connection retry count. */
     @Value("${postgres.connection.create.retry.count:3}")
     private int connectionRetryCount;
+    
+    /** The connection retry delay. */
     @Value("${postgres.connection.retry.delay.ms:10}")
     private int connectionRetryDelay;
 
+    /** The auth mechanism. */
     @Value("${postgres.auth.Mechanism:}")
     private String authMechanism;
 
+    /** The ssl mode. */
     @Value("${postgres.ssl.mode:prefer}")
     private String sslMode;
 
+    /** The ssl response timeout. */
     @Value("${postgres.ssl.timeout:" + FIVE_THOUSAND + "}")
     private int sslResponseTimeout;
 
+    /** The root crt path. */
     @Value("${postgres.ssl.root.crt:}")
     private String rootCrtPath;
 
@@ -192,6 +237,12 @@ public class PostgresDbConfig {
         return dataSource;
     }
 
+    /**
+     * Retry connection creation.
+     *
+     * @throws InterruptedException the interrupted exception
+     * @throws SQLException the SQL exception
+     */
     private void retryConnectionCreation() throws InterruptedException, SQLException {
         while (connectionRetryCount > 0 && !connection.isValid(1)) {
             LOGGER.info("Retrying the connection creation");
@@ -209,6 +260,11 @@ public class PostgresDbConfig {
         }
     }
 
+    /**
+     * Creates the connections.
+     *
+     * @return the connection
+     */
     private Connection createConnections()  {
         HikariDataSource hds = ((HikariDataSource) dataSource);
         hds.setUsername(userName);
@@ -224,6 +280,11 @@ public class PostgresDbConfig {
         return conn;
     }
 
+    /**
+     * Prints the connections.
+     *
+     * @param hikariPoolMxBean the hikari pool mx bean
+     */
     private void printConnections(HikariPoolMXBean hikariPoolMxBean) {
         LOGGER.debug("Total connections {}", hikariPoolMxBean.getTotalConnections());
         LOGGER.debug("Active connections {}", hikariPoolMxBean.getActiveConnections());
@@ -234,7 +295,7 @@ public class PostgresDbConfig {
      * This method will create datasource and connection using the provided parameters.
      *
      * @throws InterruptedException , SQLException
-     *
+     * @throws SQLException the SQL exception
      */    
     @PostConstruct
     public void initDataSource() throws InterruptedException, SQLException {
@@ -271,12 +332,18 @@ public class PostgresDbConfig {
         }
     }
 
+    /**
+     * Cleanup connections and datasource.
+     */
     @PreDestroy
     private void destroy() {
         cleanupConnections();
         cleanupDataSource();
     }
 
+    /**
+     * Validate Postgres configurations.
+     */
     private void validate() {
 
         List<String> inValidConfAttributes = new ArrayList<>();
@@ -302,6 +369,11 @@ public class PostgresDbConfig {
         }
     }
 
+    /**
+     * Creates the and get data source.
+     *
+     * @return the data source
+     */
     private DataSource createAndGetDataSource() {
 
         HikariConfig config = new HikariConfig();
@@ -335,6 +407,9 @@ public class PostgresDbConfig {
         return new HikariDataSource(config);
     }
 
+    /**
+     * Cleanup data source.
+     */
     private void cleanupDataSource() {
         if (dataSource instanceof HikariDataSource hikariDataSource) {
             LOGGER.info("Closing data source...");
@@ -342,6 +417,9 @@ public class PostgresDbConfig {
         }
     }
 
+    /**
+     * Cleanup connections.
+     */
     private void cleanupConnections() {
         LOGGER.info("Closing the connections");
         HikariDataSource hikariDataSource = (HikariDataSource) dataSource;

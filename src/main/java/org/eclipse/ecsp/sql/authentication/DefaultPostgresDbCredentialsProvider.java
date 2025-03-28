@@ -54,32 +54,57 @@ import java.util.Map;
 @Component("defaultPostgresDbCredentialsProvider")
 public class DefaultPostgresDbCredentialsProvider implements PostgresDbCredentialsProvider {
 
+    /** The user name. */
     @Value("${" + PostgresDbConstants.POSTGRES_USERNAME + "}")
     private String userName;
 
+    /** The password. */
     @Value("${" + PostgresDbConstants.POSTGRES_PASSWORD + "}")
     private String password;
 
+    /**
+     * Gets the user name.
+     *
+     * @return the user name
+     */
     @Override
     public String getUserName() {
         return userName;
     }
 
+    /**
+     * Gets the password.
+     *
+     * @return the password as String
+     */
     @Override
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Refresh credentials.
+     */
     @Override
     public void refreshCredentials() {
         // No refresh required for this implementation
     }
 
+    /**
+     * Gets all credentials config.
+     *
+     * @return Map{@code <}String{@code >}{@code <}Object{@code >}
+     */
     @Override
     public Map<String, Object> getAllCredentialsConfig() {
         return new HashMap<>();
     }
 
+    /**
+     * Checks if refresh is in progress.
+     *
+     * @return true, if refresh is in progress
+     */
     @Override
     public boolean isRefreshInProgress() {
         return false;

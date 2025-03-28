@@ -44,12 +44,24 @@ package org.eclipse.ecsp.sql.exception;
  */
 public class SqlDaoException extends RuntimeException {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Instantiates a new sql dao exception.
+     *
+     * @param message the message
+     */
     public SqlDaoException(String message) {
         super(message);
     }
 
+    /**
+     * Instantiates a new sql dao exception.
+     *
+     * @param message the message
+     * @param throwable the throwable
+     */
     public SqlDaoException(String message, Throwable throwable) {
         super(message, throwable);
     }

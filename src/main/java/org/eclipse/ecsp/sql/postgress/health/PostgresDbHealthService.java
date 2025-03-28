@@ -60,15 +60,22 @@ import javax.sql.DataSource;
 @Component
 public class PostgresDbHealthService {
 
+    /** The Constant LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(PostgresDbHealthService.class);
 
+    /** The datasource. */
     @Autowired
     private DataSource datasource;
+    
+    /** The health service. */
     @Autowired
     private HealthService healthService;
 
+    /** The restart on failure flag. */
     @Value("${sp.restart.on.failure:false}")
     private boolean restartOnFailure;
+    
+    /** The pool name. */
     @Value("${" + PostgresDbConstants.POSTGRES_POOL_NAME + "}")
     private String poolName;
 
@@ -83,8 +90,16 @@ public class PostgresDbHealthService {
         healthService.startHealthServiceExecutor();
     }
 
+    /**
+     * Postgres health service callBack.
+     */
     class PostgresHealthServiceCallBack implements HealthServiceCallBack {
 
+        /**
+         * Perform restart.
+         *
+         * @return true, if successful
+         */
         @Override
         public boolean performRestart() {
             if (restartOnFailure) {

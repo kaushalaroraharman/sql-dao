@@ -53,10 +53,17 @@ import static org.junit.Assert.assertEquals;
  */
 class PostgresDbHealthTest {
 
+    /** The postgres db health monitor. */
     PostgresDbHealthMonitor postgresDbHealthMonitor = new PostgresDbHealthMonitor();
 
+    /** The postgres db health check. */
     PostgresDbHealthCheck postgresDbHealthCheck = new PostgresDbHealthCheck();
 
+    /**
+     * Test check metrics values.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void testcheckMetricsValues() throws Exception {
         assertEquals("metrics.prometheus.enabled", MetricsConstants.PROMETHEUS_ENABLED);
@@ -75,6 +82,11 @@ class PostgresDbHealthTest {
         assertEquals(".pool.PendingConnections", MetricsConstants.POSTGRES_METRIC_PENDING_CONNECTIONS);
     }
 
+    /**
+     * Test check postgres values.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void testcheckPostgresValues() throws Exception {
         assertEquals("postgres.jdbc.url", PostgresDbConstants.POSTGRES_JDBC_URL);
@@ -98,6 +110,11 @@ class PostgresDbHealthTest {
         assertEquals("", PostgresDbConstants.PROMETHEUS_ENABLED);
     }
     
+    /**
+     * Test check healt values.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void testcheckHealtValues() throws Exception  {
         assertEquals("health.postgresdb.monitor.enabled", HealthConstants.HEALTH_POSTGRES_DB_MONITOR_ENABLED);
@@ -111,6 +128,11 @@ class PostgresDbHealthTest {
         assertEquals("postgres.expected99thPercentileMs", HealthConstants.POSTGRES_EXPECTED_99_PI_MS_VALUE);
     }
     
+    /**
+     * Test constant values.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void testcheck4() throws Exception  {
         assertEquals("userName", CredentialsConstants.USERNAME_FIELD);

@@ -48,10 +48,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class PostgresDbHealthCheck extends HealthCheck {
 
+    /**
+     * Check if database is healthy.
+     * Implement custom health check to be registered to HealthCheckRegistry
+     *
+     * @return the result
+     * @throws Exception the exception
+     */
     @Override
     protected Result check() throws Exception {
         return Result.healthy();
-        // Implement custom health check - to be registered to HealthCheckRegistry
     }
 
 }

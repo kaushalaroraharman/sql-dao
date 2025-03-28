@@ -44,23 +44,36 @@ package org.eclipse.ecsp.sql.dao.constants;
  */
 public class HealthConstants {
 
+    /**
+     * Private constructor for health constants.
+     */
     private HealthConstants() {
         throw new UnsupportedOperationException("HealthConstants is a constants class and cannot be instantiated");
     }
 
+    /** The Constant HEALTH_POSTGRES_DB_MONITOR_ENABLED. */
     public static final String HEALTH_POSTGRES_DB_MONITOR_ENABLED = "health.postgresdb.monitor.enabled";
+    
+    /** The Constant HEALTH_POSTGRES_DB_MONITOR_RESTART_ON_FAILURE. */
     public static final String HEALTH_POSTGRES_DB_MONITOR_RESTART_ON_FAILURE =
             "health.postgresdb.monitor.restart.on.failure";
 
+    /** The Constant HEALTH_POSTGRES_DB_MONITOR_NAME. */
     public static final String HEALTH_POSTGRES_DB_MONITOR_NAME = "POSTGRESDB_HEALTH_MONITOR";
+    
+    /** The Constant HEALTH_POSTGRES_DB_MONTIOR_GUAGE. */
     public static final String HEALTH_POSTGRES_DB_MONTIOR_GUAGE = "POSTGRESDB_HEALTH_GUAGE";
 
+    /** The Constant POOL_CONNECTIVITY_HEALTH_CHECK. */
     public static final String POOL_CONNECTIVITY_HEALTH_CHECK = ".pool.ConnectivityCheck";
 
+    /** The Constant POOL_CONNECTION_99_PERCENT_HEALTH_CHECK. */
     public static final String POOL_CONNECTION_99_PERCENT_HEALTH_CHECK = ".pool.Connection99Percent";
 
+    /** The Constant POSTGRES_EXPECTED_99_PI_MS. */
     public static final String POSTGRES_EXPECTED_99_PI_MS = "expected99thPercentileMs";
 
+    /** The Constant POSTGRES_EXPECTED_99_PI_MS_VALUE. */
     public static final String POSTGRES_EXPECTED_99_PI_MS_VALUE = "postgres.expected99thPercentileMs";
 
 }

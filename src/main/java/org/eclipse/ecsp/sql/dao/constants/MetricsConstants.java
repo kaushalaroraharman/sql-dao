@@ -44,24 +44,50 @@ package org.eclipse.ecsp.sql.dao.constants;
  */
 public class MetricsConstants {
 
+    /**
+     * Private constructor for metrics constants.
+     */
     private MetricsConstants() {
         throw new UnsupportedOperationException("MetricsConstants is a constants class and cannot be instantiated");
     }
 
+    /** The Constant PROMETHEUS_ENABLED. */
     public static final String PROMETHEUS_ENABLED = "metrics.prometheus.enabled";
+    
+    /** The Constant PROMETHEUS_AGENT_PORT_KEY. */
     public static final String PROMETHEUS_AGENT_PORT_KEY = "prometheus.agent.port";
+    
+    /** The Constant PROMETHEUS_AGENT_PORT_EXPOSED. */
     public static final String PROMETHEUS_AGENT_PORT_EXPOSED = "prometheus.agent.port.exposed";
+    
+    /** The Constant POSTGRES_DB_METRICS_ENABLED. */
     public static final String POSTGRES_DB_METRICS_ENABLED = "postgresdb.metrics.enabled";
+    
+    /** The Constant POSTGRES_DB_METRICS_THREAD_INITIAL_DELAY_MS. */
     public static final String POSTGRES_DB_METRICS_THREAD_INITIAL_DELAY_MS
             = "postgresdb.metrics.thread.initial.delay.ms";
+    
+    /** The Constant POSTGRES_DB_METRICS_THREAD_FREQUENCY_MS. */
     public static final String POSTGRES_DB_METRICS_THREAD_FREQUENCY_MS
             = "postgresdb.metrics.thread.freq.ms";
+    
+    /** The Constant POSTGRES_DB_METRICS_EXECUTOR_SHUTDOWN_BUFFER_MS. */
     public static final String POSTGRES_DB_METRICS_EXECUTOR_SHUTDOWN_BUFFER_MS
             = "postgresdb.metrics.executor.shutdown.buffer.ms";
+    
+    /** The Constant POSTGRES_METRIC_IDLE_CONNECTIONS. */
     public static final String POSTGRES_METRIC_IDLE_CONNECTIONS = ".pool.IdleConnections";
+    
+    /** The Constant POSTGRES_METRIC_ACTIVE_CONNECTIONS. */
     public static final String POSTGRES_METRIC_ACTIVE_CONNECTIONS = ".pool.ActiveConnections";
+    
+    /** The Constant POSTGRES_METRIC_PENDING_CONNECTIONS. */
     public static final String POSTGRES_METRIC_PENDING_CONNECTIONS = ".pool.PendingConnections";
+    
+    /** The Constant POSTGRES_METRIC_TOTAL_CONNECTIONS. */
     public static final String POSTGRES_METRIC_TOTAL_CONNECTIONS = ".pool.TotalConnections";
+    
+    /** The Constant SERVICE_NAME. */
     public static final String SERVICE_NAME = "service.name";
 
 }

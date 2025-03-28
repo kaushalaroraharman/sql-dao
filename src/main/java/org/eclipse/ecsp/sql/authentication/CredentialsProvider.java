@@ -46,14 +46,37 @@ import java.util.Map;
  */
 public interface CredentialsProvider {
 
+    /**
+     * Gets the user name.
+     *
+     * @return the user name
+     */
     public String getUserName();
 
+    /**
+     * Gets the password.
+     *
+     * @return the password
+     */
     public String getPassword();
 
+    /**
+     * Gets all the credentials configuration.
+     *
+     * @return Map{@code <}String{@code >}{@code <}Object{@code >}
+     */
     public Map<String, Object> getAllCredentialsConfig();
 
+    /**
+     * Refresh credentials.
+     */
     public void refreshCredentials();
 
+    /**
+     * Checks if refresh is in progress.
+     *
+     * @return true, if refresh is in progress
+     */
     public boolean isRefreshInProgress();
 
 }

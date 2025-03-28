@@ -62,24 +62,33 @@ import static org.junit.Assert.assertNotEquals;
 @ContextConfiguration(classes = { DefaultPostgresDbCredentialsProvider.class, PostgresDbConfig.class,
     IgnitePostgresDbGuage.class, IgnitePostgresDbMetricsExporter.class })
 @TestPropertySource("/application-test.properties")
-public class IgnitePostgresDbMetricsExporterTest {
+class IgnitePostgresDbMetricsExporterTest {
 
+    /** The postgres db guage. */
     @Autowired
     private IgnitePostgresDbGuage postgresDbGuage;
 
+    /** The ignite postgres db metrics exporter. */
     @Autowired
     private IgnitePostgresDbMetricsExporter ignitePostgresDbMetricsExporter;
 
+    /** The postgresql container. */
     @Container
     static PostgreSQLContainer postgresqlContainer = new PostgreSQLContainer("postgres:15").withDatabaseName("test")
             .withUsername("root").withPassword("root");
 
+    /**
+     * Sets up postgres.
+     */
     @BeforeAll
     public static void setUpPostgres() {
         postgresqlContainer.start();
         System.setProperty("DB_URL", postgresqlContainer.getJdbcUrl());
     }
 
+    /**
+     * Test connection pool.
+     */
     @Test
     void testConnectionPool() {
         assertNotEquals(1.0, postgresDbGuage.get("hikariConnectionPool.pool.TotalConnections",
@@ -92,6 +101,9 @@ public class IgnitePostgresDbMetricsExporterTest {
                 "test", "localhost"), 0.0);
     }
 
+    /**
+     * Test metrics.
+     */
     @Test
     void testMetrics() {
         final int two = 2;
@@ -100,15 +112,19 @@ public class IgnitePostgresDbMetricsExporterTest {
         assertEquals(value, postgresDbGuage.get("test2", "test", "test"), value);
     }
 
+    /**
+     * Test invalid metrics.
+     */
     @Test
     void testInvalidMetrics() {
         assertEquals(0.0, postgresDbGuage.get("test", "test", "test"), 0.0);
     }
 
+    /**
+     * Tear up postgres server.
+     */
     @AfterAll
     public static void tearUpPostgresServer() {
         postgresqlContainer.stop();
     }
 }
-
-

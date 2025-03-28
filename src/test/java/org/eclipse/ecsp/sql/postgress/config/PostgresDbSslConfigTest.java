@@ -64,30 +64,44 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration(classes = { PostgresDbConfig.class, DefaultPostgresDbCredentialsProvider.class })
 @TestPropertySource("/application-ssl-valid-crt-test.properties")
 @Disabled
-public class PostgresDbSslConfigTest {
+class PostgresDbSslConfigTest {
 
+    /** The default postgres db credentials provider. */
     @Autowired
     DefaultPostgresDbCredentialsProvider defaultPostgresDbCredentialsProvider;
 
+    /** The data source. */
     @Autowired
     private DataSource dataSource;
     
+    /** The postgresql container. */
     @Container
     static PostgreSQLContainer postgresqlContainer = new PostgreSQLContainer("postgres:15").withDatabaseName("test")
             .withUsername("root").withPassword("root");
 
+    /**
+     * Sets up postgres.
+     */
     @BeforeAll
     public static void setUpPostgres() {
         postgresqlContainer.start();
         System.setProperty("DB_URL", postgresqlContainer.getJdbcUrl());
     }
 
+    /**
+     * Test connection with ssl enabled.
+     *
+     * @throws SQLException the SQL exception
+     */
     @Test
     void testConnectionWithSslEnabled() throws SQLException {
         assertNotNull(dataSource.getConnection());
     }
 
 
+    /**
+     * Tear up postgres server.
+     */
     @AfterAll
     public static void tearUpPostgresServer() {
         postgresqlContainer.stop();

@@ -71,50 +71,65 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class IgnitePostgresDbMetricsExporter {
 
+    /** The Constant LOGGER. */
     private static final IgniteLogger LOGGER = IgniteLoggerFactory.getLogger(IgnitePostgresDbMetricsExporter.class);
 
+    /** The postgres db metrics enabled flag. */
     @Value("${" + MetricsConstants.POSTGRES_DB_METRICS_ENABLED + ":false}")
     private boolean postgresDbMetricsEnabled;
 
+    /** The prometheus enabled flag. */
     @Value("${" + MetricsConstants.PROMETHEUS_ENABLED + ":false}")
     private boolean prometheusEnabled;
 
+    /** The thread initial delay. */
     @Value("${" + MetricsConstants.POSTGRES_DB_METRICS_THREAD_INITIAL_DELAY_MS + ":2000}")
     private int threadInitialDelay;
 
+    /** The thread frequency. */
     @Value("${" + MetricsConstants.POSTGRES_DB_METRICS_THREAD_FREQUENCY_MS + ":5000}")
     private int threadFrequency;
 
+    /** The svc. */
     @Value("${" + MetricsConstants.SERVICE_NAME + "}")
     private String svc;
 
+    /** The node name. */
     @Value("${NODE_NAME:localhost}")
     private String nodeName;
 
+    /** The shutdown buffer. */
     @Value("${" + MetricsConstants.POSTGRES_DB_METRICS_EXECUTOR_SHUTDOWN_BUFFER_MS + ":2000}")
     private int shutdownBuffer;
 
+    /** The postgres db gauge. */
     @Autowired
     private IgnitePostgresDbGuage postgresDbGauge;
 
+    /** The datasource. */
     @Autowired
     private DataSource datasource;
 
+    /** The postgres db metrics executor. */
     private ScheduledExecutorService postgresDbMetricsExecutor;
 
+    /** The pool name. */
     @Value("${" + PostgresDbConstants.POSTGRES_POOL_NAME + "}")
     private String poolName;
 
+    /** The prometheus export port. */
     @Value("${" + MetricsConstants.PROMETHEUS_AGENT_PORT_KEY + ":"
             + MetricsConstants.PROMETHEUS_AGENT_PORT_EXPOSED + "}")
     private int prometheusExportPort;
 
+    /** The prometheus export server. */
     private HTTPServer prometheusExportServer;
 
+    /** The metrics list. */
     List<String> metricsList;
 
     /**
-     * init().
+     * Start prometheus server and initialize metrics executor.
      */
     @PostConstruct
     public void init() {
@@ -127,6 +142,9 @@ public class IgnitePostgresDbMetricsExporter {
         }
     }
 
+    /**
+     * Creates the metrics list.
+     */
     private void createMetricsList() {
         metricsList = new ArrayList<>();
         metricsList.add(poolName + MetricsConstants.POSTGRES_METRIC_TOTAL_CONNECTIONS);
@@ -135,6 +153,9 @@ public class IgnitePostgresDbMetricsExporter {
         metricsList.add(poolName + MetricsConstants.POSTGRES_METRIC_PENDING_CONNECTIONS);
     }
 
+    /**
+     * Start prometheus server.
+     */
     private void startPrometheusServer() {
         if (prometheusEnabled) {
             try {
@@ -146,6 +167,9 @@ public class IgnitePostgresDbMetricsExporter {
         }
     }
 
+    /**
+     * Creates the postgres db metrics executor.
+     */
     private void createPostgresDbMetricsExecutor() {
         postgresDbMetricsExecutor = Executors.newSingleThreadScheduledExecutor(runnable -> {
             Thread t = Executors.defaultThreadFactory().newThread(runnable);
@@ -159,12 +183,18 @@ public class IgnitePostgresDbMetricsExporter {
         LOGGER.debug("Scheduled thread executor for PostgresDB metrics created successfully.");
     }
 
+    /**
+     * Start postgres db metrics executor.
+     */
     private void startPostgresDbMetricsExecutor() {
         LOGGER.info("Starting the PostgresDB metrics executor...");
         postgresDbMetricsExecutor.scheduleWithFixedDelay(this::fetchMetrics,
                 threadInitialDelay, threadFrequency, TimeUnit.MILLISECONDS);
     }
 
+    /**
+     * Fetch metrics.
+     */
     private void fetchMetrics() {
 
         if (null != datasource) {
@@ -177,12 +207,18 @@ public class IgnitePostgresDbMetricsExporter {
         }
     }
 
+    /**
+     * Export metrics.
+     *
+     * @param val the val
+     * @param metricName the metric name
+     */
     private void exportMetrics(double val, String metricName) {
         postgresDbGauge.set(val, metricName, svc, nodeName);
     }
 
     /**
-     * destroys the open resources.
+     * close metrics executor and stop postgres export server.
      */
     @PreDestroy
     public void close() {

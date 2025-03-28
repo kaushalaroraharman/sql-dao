@@ -46,30 +46,59 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The Class TestCredentialsProvider.
+ */
 @Component("testCredentialsProvider")
 class TestCredentialsProvider implements CredentialsProvider {
 
+    /** The refresh. */
     public boolean refresh = true;
+    
+    /** The temp. */
     int temp = 0;
 
+    /**
+     * Gets the user name.
+     *
+     * @return the user name
+     */
     @Override
     public String getUserName() {
         return "test";
     }
 
+    /**
+     * Gets the password.
+     *
+     * @return the password
+     */
     @Override
     public String getPassword() {
         return "password";
     }
 
+    /**
+     * Gets the all credentials config.
+     *
+     * @return the all credentials config
+     */
     @Override
     public Map<String, Object> getAllCredentialsConfig() {
         return new HashMap<>();
     }
 
+    /**
+     * Refresh credentials.
+     */
     @Override
     public void refreshCredentials() {}
 
+    /**
+     * Checks if is refresh in progress.
+     *
+     * @return true, if is refresh in progress
+     */
     @Override
     public boolean isRefreshInProgress() {
         if (refresh && temp == 1) {

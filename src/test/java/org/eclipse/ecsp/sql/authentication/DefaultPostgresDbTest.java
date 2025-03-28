@@ -43,16 +43,26 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertNull;
 
+/**
+ * The Class DefaultPostgresDbTest.
+ */
 class DefaultPostgresDbTest {
 
+    /** The default postgres db credentials provider. */
     DefaultPostgresDbCredentialsProvider defaultPostgresDbCredentialsProvider
             = new DefaultPostgresDbCredentialsProvider();
     
+    /**
+     * Test get user name.
+     */
     @Test
     void testgetUserName() {
         assertNull(defaultPostgresDbCredentialsProvider.getUserName());
     }
 
+    /**
+     * Test get password.
+     */
     @Test
     void testgetPassword() {
         assertNull(defaultPostgresDbCredentialsProvider.getPassword());

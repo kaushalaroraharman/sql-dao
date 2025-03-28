@@ -55,22 +55,30 @@ import static org.mockito.Mockito.when;
 /**
  * Test class for {@link IgnitePostgresDbMetricsExporter}.
  */
-public class PostgresDbMetricsExporterUnitTest {
+class PostgresDbMetricsExporterUnitTest {
 
+    /** The postgres db gauge. */
     @Mock
     private IgnitePostgresDbGuage postgresDbGauge;
 
+    /** The datasource. */
     @Mock
     private HikariDataSource datasource;
 
+    /** The exporter. */
     @InjectMocks
     private IgnitePostgresDbMetricsExporter exporter;
 
+    /** The metric registry. */
     @Mock
     MetricRegistry metricRegistry;
 
+    /** The Constant TWO. */
     public static final int TWO = 2;
 
+    /**
+     * Test metrics.
+     */
     @Test
     void testMetrics() {
         MockitoAnnotations.openMocks(this);
@@ -97,5 +105,3 @@ public class PostgresDbMetricsExporterUnitTest {
     }
 
 }
-
-

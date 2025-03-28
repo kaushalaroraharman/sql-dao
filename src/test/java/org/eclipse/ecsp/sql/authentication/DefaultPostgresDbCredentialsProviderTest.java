@@ -62,40 +62,60 @@ import static org.junit.Assert.assertNotNull;
 @TestPropertySource("/application-dao-test.properties")
 public class DefaultPostgresDbCredentialsProviderTest {
 
+    /** The default postgres db credentials provider. */
     @Autowired
     DefaultPostgresDbCredentialsProvider defaultPostgresDbCredentialsProvider;
 
+    /** The postgresql container. */
     @Container
     static PostgreSQLContainer postgresqlContainer = new PostgreSQLContainer("postgres:15").withDatabaseName("test")
             .withUsername("root").withPassword("root");
 
+    /**
+     * Sets up postgres.
+     */
     @BeforeAll
     public static void setUpPostgres() {
         postgresqlContainer.start();
         System.setProperty("DB_URL", postgresqlContainer.getJdbcUrl());
     }
 
+    /**
+     * Test get user name.
+     */
     @Test
     void testgetUserName() {
         assertNotNull(defaultPostgresDbCredentialsProvider.getUserName());
     }
 
+    /**
+     * Test get password.
+     */
     @Test
     void testgetPassword() {
         assertNotNull(defaultPostgresDbCredentialsProvider.getPassword());
     }
 
+    /**
+     * Test get all credentials config.
+     */
     @Test
     void testgetAllCredentialsConfig() {
         assertNotNull(defaultPostgresDbCredentialsProvider.getAllCredentialsConfig());
     }
 
+    /**
+     * Test refresh credentials.
+     */
     @Test
     void testrefreshCredentials() {
         defaultPostgresDbCredentialsProvider.refreshCredentials();
         assertFalse(defaultPostgresDbCredentialsProvider.isRefreshInProgress());
     }
 
+    /**
+     * Tear up postgres server.
+     */
     @AfterAll
     public static void tearUpPostgresServer() {
         postgresqlContainer.stop();

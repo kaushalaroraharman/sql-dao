@@ -66,30 +66,46 @@ import static org.mockito.Mockito.when;
  */
 class PostgresConnectionsTest {
 
+    /** The ctx. */
     @Mock
     ApplicationContext ctx;
 
+    /** The postgres db config. */
     @InjectMocks
     PostgresDbConfig postgresDbConfig;
 
+    /** The default postgres db credentials provider. */
     @Mock
     DefaultPostgresDbCredentialsProvider defaultPostgresDbCredentialsProvider;
 
+    /** The credentials provider. */
     @Mock
     CredentialsProvider credentialsProvider;
 
+    /** The connection. */
     @Mock
     Connection connection;
 
+    /** The data source. */
     @Mock
     HikariDataSource dataSource;
 
+    /** The Constant THREE. */
     public static final int THREE = 3;
+    
+    /** The Constant TWO. */
     public static final int TWO = 2;
+    
+    /** The Constant ZERO. */
     public static final int ZERO = 0;
+    
+    /** The Constant THIRTY_THREE. */
     public static final int THIRTY_THREE = 30;
+    
+    /** The Constant SIXTY_THOUSAND. */
     public static final int SIXTY_THOUSAND = 60000;
 
+    /** The hikari pool mx bean. */
     HikariPoolMXBean hikariPoolMxBean = new HikariPoolMXBean() {
         @Override
         public int getIdleConnections() {
@@ -121,6 +137,11 @@ class PostgresConnectionsTest {
         public void resumePool() {}
     };
 
+    /**
+     * Test failure connection creation.
+     *
+     * @throws SQLException the SQL exception
+     */
     @Test
     void testFailureConnectionCreation() throws SQLException {
         MockitoAnnotations.openMocks(this);
@@ -144,6 +165,12 @@ class PostgresConnectionsTest {
     }
 
 
+    /**
+     * Test connection creation with ssl.
+     *
+     * @throws SQLException the SQL exception
+     * @throws InterruptedException the interrupted exception
+     */
     @Test
     void testConnectionCreationWithSsl() throws SQLException, InterruptedException {
         MockitoAnnotations.openMocks(this);

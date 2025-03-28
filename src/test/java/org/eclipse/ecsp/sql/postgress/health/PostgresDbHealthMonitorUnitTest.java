@@ -57,23 +57,32 @@ import static org.mockito.Mockito.when;
  */
 class PostgresDbHealthMonitorUnitTest {
 
+    /** The postgres db health monitor. */
     @InjectMocks
     PostgresDbHealthMonitor postgresDbHealthMonitor;
 
+    /** The postgres db health check. */
     @Mock
     PostgresDbHealthCheck postgresDbHealthCheck;
 
+    /** The data source. */
     HikariDataSource dataSource;
 
+    /** The health check registry. */
     @Mock
     HealthCheckRegistry healthCheckRegistry;
 
+    /** The health check. */
     @Mock
     HealthCheck healthCheck;
 
+    /** The result. */
     @Mock
     HealthCheck.Result result;
 
+    /**
+     * Test unhealthy.
+     */
     @Test
     void testunHealthy() {
         MockitoAnnotations.openMocks(this);
@@ -81,6 +90,9 @@ class PostgresDbHealthMonitorUnitTest {
         assertFalse(healthy);
     }
 
+    /**
+     * Test failed health check.
+     */
     @Test
     void testFailedHealthCheck() {
         dataSource = mock(HikariDataSource.class);
@@ -93,7 +105,4 @@ class PostgresDbHealthMonitorUnitTest {
         assertFalse(healthy);
     }
 
-
 }
-
-

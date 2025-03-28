@@ -67,24 +67,30 @@ import java.util.List;
 @Component
 public class PostgresDbHealthMonitor implements HealthMonitor {
 
+    /** The logger. */
     private static IgniteLogger logger = IgniteLoggerFactory.getLogger(PostgresDbHealthMonitor.class);
 
+    /** The datasource. */
     @Autowired
     private DataSource datasource;
 
+    /** The postgres db health monitor enabled flag. */
     @Value("${" + HealthConstants.HEALTH_POSTGRES_DB_MONITOR_ENABLED + ": true }")
     private boolean postgresDbHealthMonitorEnabled;
 
+    /** The postgres db restart on failure flag. */
     @Value("${" + HealthConstants.HEALTH_POSTGRES_DB_MONITOR_RESTART_ON_FAILURE + ": true }")
     private boolean postgresDbRestartOnFailure;
 
+    /** The pool name. */
     @Value("${" + PostgresDbConstants.POSTGRES_POOL_NAME + "}")
     private String poolName;
 
+    /** The health check list. */
     List<String> healthCheckList;
 
     /**
-     * init().
+     * Initialize health check list.
      */
     @PostConstruct
     public void init() {
@@ -93,6 +99,12 @@ public class PostgresDbHealthMonitor implements HealthMonitor {
         healthCheckList.add(poolName + HealthConstants.POOL_CONNECTION_99_PERCENT_HEALTH_CHECK);
     }
 
+    /**
+     * Checks if postgres database is healthy.
+     *
+     * @param forceHealthCheck the force health check
+     * @return true, if is healthy
+     */
     @Override
     public boolean isHealthy(boolean forceHealthCheck) {
 
@@ -119,21 +131,41 @@ public class PostgresDbHealthMonitor implements HealthMonitor {
         return true;
     }
 
+    /**
+     * Monitor name.
+     *
+     * @return the string
+     */
     @Override
     public String monitorName() {
         return HealthConstants.HEALTH_POSTGRES_DB_MONITOR_NAME;
     }
 
+    /**
+     * Needs restart on failure.
+     *
+     * @return true, if successful
+     */
     @Override
     public boolean needsRestartOnFailure() {
         return postgresDbRestartOnFailure;
     }
 
+    /**
+     * Metric name.
+     *
+     * @return the string
+     */
     @Override
     public String metricName() {
         return HealthConstants.HEALTH_POSTGRES_DB_MONTIOR_GUAGE;
     }
 
+    /**
+     * Checks if health monitor is enabled.
+     *
+     * @return true, if is enabled
+     */
     @Override
     public boolean isEnabled() {
         return postgresDbHealthMonitorEnabled;

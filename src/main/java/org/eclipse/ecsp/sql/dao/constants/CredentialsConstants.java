@@ -44,13 +44,23 @@ package org.eclipse.ecsp.sql.dao.constants;
  */
 public class CredentialsConstants {
 
+    /**
+     * Private constructor.
+     */
     private CredentialsConstants() {
         throw new UnsupportedOperationException("This is a constants class and cannot be instantiated");
     }
 
+    /** The Constant USERNAME_FIELD. */
     public static final String USERNAME_FIELD = "userName";
+    
+    /** The Constant PASSWORD_FIELD. */
     public static final String PASSWORD_FIELD = "password";
+    
+    /** The Constant LEASE_DURATION_FIELD. */
     public static final String LEASE_DURATION_FIELD = "leaseDuration";
+    
+    /** The Constant CREDENTIAL_PROVIDER_BEAN_NAME. */
     public static final String CREDENTIAL_PROVIDER_BEAN_NAME = "credential.provider.bean.name";
 
 }

@@ -65,53 +65,82 @@ import static org.junit.Assert.assertTrue;
 @TestPropertySource("/application-test.properties")
 class PostgresDbHealthMonitorTest {
 
+    /** The postgres db health monitor. */
     @Autowired
     PostgresDbHealthMonitor postgresDbHealthMonitor;
 
+    /** The postgres db health check. */
     @Autowired
     PostgresDbHealthCheck postgresDbHealthCheck;
 
+    /** The postgresql container. */
     @Container
     static PostgreSQLContainer postgresqlContainer = new PostgreSQLContainer("postgres:15").withDatabaseName("test")
             .withUsername("root").withPassword("root");
 
+    /**
+     * Sets up postgres.
+     */
     @BeforeAll
     public static void setUpPostgres() {
         postgresqlContainer.start();
         System.setProperty("DB_URL", postgresqlContainer.getJdbcUrl());
     }
 
+    /**
+     * Test healthy.
+     */
     @Test
     void testHealthy() {
         boolean healthy = postgresDbHealthMonitor.isHealthy(true);
         assertTrue(healthy);
     }
 
+    /**
+     * Test diagnostic monitor name.
+     */
     @Test
     void testDiagnosticMonitorName() {
         assertEquals("POSTGRESDB_HEALTH_MONITOR", postgresDbHealthMonitor.monitorName());
     }
 
+    /**
+     * Test diagnostic metric name.
+     */
     @Test
     void testDiagnosticMetricName() {
         assertEquals("POSTGRESDB_HEALTH_GUAGE", postgresDbHealthMonitor.metricName());
     }
 
+    /**
+     * Test monitor enabled.
+     */
     @Test
     void testMonitorEnabled() {
         assertTrue(postgresDbHealthMonitor.isEnabled());
     }
 
+    /**
+     * Test needs restart on failure.
+     */
     @Test
     void testNeedsRestartOnFailure() {
         assertTrue(postgresDbHealthMonitor.needsRestartOnFailure());
     }
 
+    /**
+     * Testcheck health result.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void testcheckHealthResult() throws Exception {
         assertNotNull(postgresDbHealthCheck.check());
     }
 
+    /**
+     * Tear up postgres server.
+     */
     @AfterAll
     public static void tearUpPostgresServer() {
         postgresqlContainer.stop();

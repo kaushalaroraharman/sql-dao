@@ -54,8 +54,12 @@ import org.eclipse.ecsp.utils.metrics.IgniteGuage;
 @Component
 public class IgnitePostgresDbGuage extends IgniteGuage {
 
+    /** The Constant LOGGER. */
     private static final IgniteLogger LOGGER = IgniteLoggerFactory.getLogger(IgnitePostgresDbGuage.class);
 
+    /**
+     * Create guage for postgres metrics.
+     */
     public void setup() {
         createGuage("postgresdb_metric", "metric_name", "svc", "node");
         LOGGER.debug("postgresdb_metric guage successfully created.");

@@ -60,9 +60,15 @@ import javax.sql.DataSource;
 @Component
 public class JdbcTemplateProvider {
 
+    /** The data source. */
     @Autowired
     private DataSource dataSource;
 
+    /**
+     * Jdbc template.
+     *
+     * @return the jdbc template
+     */
     @Bean(name = "jdbcTemplate")
     public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource);

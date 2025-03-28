@@ -63,24 +63,35 @@ import static org.mockito.Mockito.when;
  */
 class PostgresConfigJunitTest {
 
+    /** The ctx. */
     @Mock
     ApplicationContext ctx;
 
+    /** The postgres db config. */
     @InjectMocks
     PostgresDbConfig postgresDbConfig;
 
+    /** The default postgres db credentials provider. */
     @Mock
     DefaultPostgresDbCredentialsProvider defaultPostgresDbCredentialsProvider;
 
+    /** The credentials provider. */
     @Mock
     CredentialsProvider credentialsProvider;
 
+    /** The connection. */
     @Mock
     Connection connection;
 
+    /** The Constant THREE. */
     public static final int THREE = 3;
+    
+    /** The Constant THIRTY_THREE. */
     public static final int THIRTY_THREE = 30;
 
+    /**
+     * Test failure datasource creation.
+     */
     @Test
     void testFailureDatasourceCreation() {
         MockitoAnnotations.openMocks(this);
@@ -92,6 +103,9 @@ class PostgresConfigJunitTest {
         assertTrue(e.getMessage().contains("Retry Attempts exhausted for creating the datasource"));
     }
 
+    /**
+     * Test.
+     */
     @Test
     void test()  {
         MockitoAnnotations.openMocks(this);
