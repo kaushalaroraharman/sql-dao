@@ -62,7 +62,7 @@
         <appender-ref ref="STDOUT" />
     </appender>
 
-    <logger name="com.harman" level="DEBUG"
+    <logger name="org.eclipse" level="DEBUG"
         additivity="false">
         <appender-ref ref="ASYNC-STDOUT" />
     </logger>

@@ -110,11 +110,11 @@
 		<sonar.java.checkstyle.reportPaths>${project.build.directory}/checkstyle-result.xml
 		</sonar.java.checkstyle.reportPaths>
 		<sonar.coverage.exclusions>
-        src/main/java/com/harman/ignite/sql/dao/constants/CredentialsConstants.java,
-        src/main/java/com/harman/ignite/sql/dao/constants/HealthConstants.java,
-        src/main/java/com/harman/ignite/sql/dao/constants/MetricsConstants.java,
-        src/main/java/com/harman/ignite/sql/dao/constants/PostgresDbConstants.java,
-        src/main/java/com/harman/ignite/sql/exception/SqlDaoException.java
+        src/main/java/org/eclipse/ecsp/sql/dao/constants/CredentialsConstants.java,
+        src/main/java/org/eclipse/ecsp/sql/dao/constants/HealthConstants.java,
+        src/main/java/org/eclipse/ecsp/sql/dao/constants/MetricsConstants.java,
+        src/main/java/org/eclipse/ecsp/sql/dao/constants/PostgresDbConstants.java,
+        src/main/java/org/eclipse/ecsp/sql/exception/SqlDaoException.java
         </sonar.coverage.exclusions>
 	</properties>
 	
@@ -413,11 +413,11 @@
 				<version>0.8.8</version>
 				<configuration>
 					<excludes>
-						<exclude>com/harman/ignite/sql/dao/constants/CredentialsConstants.class</exclude>
-                        <exclude>com/harman/ignite/sql/dao/constants/HealthConstants.class</exclude>
-                        <exclude>com/harman/ignite/sql/dao/constants/MetricsConstants.class</exclude>
-                        <exclude>com/harman/ignite/sql/dao/constants/PostgresDbConstants.class</exclude>
-                        <exclude>com/harman/ignite/sql/dao/exception/SqlDaoException.class</exclude>
+						<exclude>org/eclipse/ecsp/sql/dao/constants/CredentialsConstants.class</exclude>
+                        <exclude>org/eclipse/ecsp/sql/dao/constants/HealthConstants.class</exclude>
+                        <exclude>org/eclipse/ecsp/sql/dao/constants/MetricsConstants.class</exclude>
+                        <exclude>org/eclipse/ecsp/sql/dao/constants/PostgresDbConstants.class</exclude>
+                        <exclude>org/eclipse/ecsp/sql/dao/exception/SqlDaoException.class</exclude>
 					</excludes>
 				</configuration>
 				<executions>
